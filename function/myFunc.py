@@ -81,7 +81,6 @@ def admin():
                     cursor.execute("INSERT INTO data_buku(judul_buku,penulis,penerbit,tahun_terbit,kota_terbit) VALUES(%s,%s,%s,%s,%s)",(judul_buku,penulis,penerbit,tahun_terbit,kota_terbit))
                     st.success("Data Buku Berhasil Di Tambahkan")
                     db.commit()
-                    db.close()
         elif menu == "EDIT BUKU":
             st.header("Edit Buku")
             id_input = st.number_input("Pilih",1)
@@ -105,7 +104,6 @@ def admin():
                                 cursor.execute(sql, val)
                                 st.success("Data Buku Berhasil Di Perbarui")
                                 db.commit()
-                                db.close()
                 else:
                     st.warning("Data Buku Tidak Di Temukan", icon="⚠️")
         elif menu == "PEMINJAMAN BUKU":
@@ -141,7 +139,6 @@ def admin():
                         cursor.execute(sql, val)
                         st.success("Peminjaman Berhaisl")
                         db.commit()
-                        db.close()
                 else:
                     # Menambah data
                     sql = "INSERT INTO data_peminjam (peminjam, judul_buku, is_active) VALUES (%s, %s,%s)"
@@ -149,7 +146,6 @@ def admin():
                     cursor.execute(sql, val)
                     st.success("Peminjaman Berhaisl")
                     db.commit()
-                    db.close()
         elif menu == "DAFTAR PEMINJAM":
             dp = getWhere('data_peminjam',1,'is_active')
             if dp:
@@ -199,7 +195,6 @@ def admin():
                     val = (0, denda, data[0])
                     cursor.execute(sql, val)
                     db.commit()
-                    # db.close()
                     if denda:
                         st.warning(f"Terimakasih Telah Meminjam Buku Kami Dan Jangan lupa Membayar Denda Sebesar Rp{denda}")
                     else :
@@ -227,7 +222,6 @@ def admin():
                         cursor.execute("INSERT INTO users (nama, username, password, role) VALUES (%s, %s, %s, %s)", (nama, username, hashed_password, role))
                         st.success("Akun berhasil dibuat.")
                         db.commit()
-                        db.close()
                     else:
                         st.warning("Username sudah ada.")
                 else:
