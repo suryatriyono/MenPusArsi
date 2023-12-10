@@ -83,7 +83,7 @@ def admin():
         """
     st.markdown(my_css,unsafe_allow_html=True,)
     if st.session_state["role"] == "9":
-        st.title("ADMIN PERPUSTAKAN ARSITEKTUR")
+        st.title(f"{st.session_state["nama"].upper()}ADMIN PERPUSTAKAN ARSITEKTUR")
         menu = st.sidebar.selectbox("MENU ADMIN",["DATA BUKU", "TAMBAH BUKU", "EDIT BUKU", "PEMINJAMAN BUKU", "DAFTAR PEMINJAM","PENGEMBALIAN", "REGISTER"])
 
         if menu == "DATA BUKU":
