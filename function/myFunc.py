@@ -15,6 +15,18 @@ cursor = db.cursor()
 
 def login():
     st.set_page_config(page_title="Halaman Login", page_icon="🍃", layout="centered")
+    my_css = """
+            <style>
+            [data-testid="stAppViewContainer"] {
+                background-image:url("https://i.pinimg.com/736x/c1/50/3e/c1503e2ad42fbdf55e1e59214d080e68.jpg");
+                background-repeat:no-repeat; 
+                background-size:cover;
+                background-position:center;
+                text-shadow: 3px 3px 3px violet
+            }
+            </style>
+        """
+    st.markdown(my_css,unsafe_allow_html=True,)
     with st.form('login'):
         st.title("Login")
         username = st.text_input("Username")
@@ -30,7 +42,6 @@ def login():
                     st.warning("Password Tidak Boleh Kosong")
                 elif pbkdf2_sha256.verify(password, result[3]):
                     #Initialization
-                    st.warning(result[4])
                     st.session_state["role"] = result[4]
                     st.session_state["nama"] = result[1]
                     st.rerun()
@@ -59,6 +70,18 @@ def getUser(table):
 # Halaman Admin
 def admin():
     st.set_page_config(page_title=f"Admin {st.session_state["nama"]}", page_icon="🍃", layout="centered")
+    my_css = """
+            <style>
+            [data-testid="stAppViewContainer"] {
+                background-image:url("https://i.pinimg.com/736x/0a/af/67/0aaf67b981315a376e6b61acfde77685.jpg");
+                background-repeat:no-repeat; 
+                background-size:cover;
+                background-position:center;
+                text-shadow: 1px 1px 3px darkviolet
+            }
+            </style>
+        """
+    st.markdown(my_css,unsafe_allow_html=True,)
     if st.session_state["role"] == "9":
         st.title("ADMIN PERPUSTAKAN ARSITEKTUR")
         menu = st.sidebar.selectbox("MENU ADMIN",["DATA BUKU", "TAMBAH BUKU", "EDIT BUKU", "PEMINJAMAN BUKU", "DAFTAR PEMINJAM","PENGEMBALIAN", "REGISTER"])
@@ -239,6 +262,18 @@ def user():
     if st.session_state["role"] == "1":
         nama = st.session_state["nama"]
         st.set_page_config(page_title=f"User {nama}", page_icon="📚", layout="centered")
+        my_css = """
+            <style>
+            [data-testid="stAppViewContainer"] {
+                background-image:url("https://i.pinimg.com/736x/c1/50/3e/c1503e2ad42fbdf55e1e59214d080e68.jpg");
+                background-repeat:no-repeat; 
+                background-size:cover;
+                background-position:center;
+                text-shadow: 1px 1px 3px darkviolet
+            }
+            </style>
+        """
+        st.markdown(my_css,unsafe_allow_html=True,)
         menu = st.sidebar.selectbox("MENU", ["HOME","RIWAYAT"])
         if menu == "HOME":
             st.title(body=f"📚Selamat Datang {nama}")
@@ -264,9 +299,9 @@ def user():
                     st.warning(f"Mohon Di Kembalikan Sebelum {waktu_kembali}", icon="⚠️")
                 else :
                     denda += (selisih_hari - 7) * 1000
-                    st.error(f"Kamu Terlambat {selisih_hari - 7} Hari Dan Kamu Medapat Sanksi Rp{denda}")
+                    st.error(f"Kamu Terlambat {selisih_hari - 7} Hari Dan Kamu Medapat Sanksi Rp{denda}",icon="❌")
             else:
-                st.subheader("Yahh Kamu Belum Meminjam Buku Kali ini")
+                st.info("Yahh Kamu Belum Meminjam Buku Kali ini 🥲")
 
         if menu == "RIWAYAT":
             st.title(body="📚Riwayat Peminjaman Buku")
@@ -287,7 +322,7 @@ def user():
                 df = pd.DataFrame(dp)
                 AgGrid(df)
             else:
-                st.warning("Riwayat Akan Tersedia Setelah Peminjaman Selesai")
+                st.warning("Riwayat Akan Tersedia Setelah Peminjaman Selesai",icon="⚠️")
         logout = st.sidebar.button("Logout")
         if logout:
             del st.session_state['role']
